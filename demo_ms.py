@@ -34,6 +34,12 @@ question = (f"Con base a la siguiente información: {pre_process_info}"
             "\n6.- RFC de la empresa: GDM002018AS2"
             "\n7.- RFC de la persona: TEVD971127RU1"
             "\n8.- RFC de la persona: SUGG510625ER7"
+            "Nota importante: Necesito que formatees lo que encuentres de la siguiente manera"
+            "Nombre Persona: "
+            "RFC Persona: "
+            "Nombre Empresa: "
+            "RFC Empresa: "
+            "Si no hayas alguna información, rellena los formatos como 'No encontrado'"
             )
 
 prompt = f'{system_prompt}\n\nHuman: {question}\n\nAssistant:'
@@ -47,8 +53,9 @@ response = client.completions.create(
 )
 
 # print(response.completion)
-# Suponiendo que response.completion contiene el texto generado por la API
-response_text = response.completion
+
+# / / / / / / / ASIGNAR DATA EN VARIABLES / / / / / / / 
+response_text = response.completion #Reasignar la respuesta obtenida en otra variable
 
 # Definimos las variables donde almacenaremos la información
 rfc_persona = ""
@@ -57,8 +64,7 @@ rfc_empresa = ""
 nombre_empresa = ""
 
 # Buscamos y extraemos la información necesaria del texto
-# Primero dividimos el texto en líneas
-lines = response_text.splitlines()
+lines = response_text.splitlines() #Dividir el texto en líneas
 
 # Luego iteramos sobre cada línea para identificar y extraer la información relevante
 for line in lines:
@@ -71,8 +77,9 @@ for line in lines:
     elif line.startswith("Nombre Empresa:"):
         nombre_empresa = line.split(":")[1].strip()
 
-# Mostramos la información para verificar que se haya almacenado correctamente
+# Muestro la información para verificar que se haya almacenado correctamente
 print("RFC Persona:", rfc_persona)
 print("Nombre Persona:", nombre_persona)
 print("RFC Empresa:", rfc_empresa)
 print("Nombre Empresa:", nombre_empresa)
+
