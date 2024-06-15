@@ -1,5 +1,13 @@
+import os
 import PyPDF2
 import anthropic
+from dotenv import load_dotenv
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
+# Obtener la clave API desde las variables de entorno
+api_key = os.getenv("ANTHROPIC_API_KEY")
 
 # -- Extraer información de un documento -- #
 pdf_file_obj = open('Test1.pdf', 'rb')  # Documento en hardcode
@@ -30,7 +38,7 @@ question = (f"Con base a la siguiente información: {pre_process_info}"
 
 prompt = f'{system_prompt}\n\nHuman: {question}\n\nAssistant:'
 
-client = anthropic.Client(api_key="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")
+client = anthropic.Client(api_key=api_key)
 
 response = client.completions.create(
     model="claude-2",
