@@ -46,4 +46,33 @@ response = client.completions.create(
     max_tokens_to_sample=300,
 )
 
-print(response.completion)
+# print(response.completion)
+# Suponiendo que response.completion contiene el texto generado por la API
+response_text = response.completion
+
+# Definimos las variables donde almacenaremos la información
+rfc_persona = ""
+nombre_persona = ""
+rfc_empresa = ""
+nombre_empresa = ""
+
+# Buscamos y extraemos la información necesaria del texto
+# Primero dividimos el texto en líneas
+lines = response_text.splitlines()
+
+# Luego iteramos sobre cada línea para identificar y extraer la información relevante
+for line in lines:
+    if line.startswith("RFC Persona:"):
+        rfc_persona = line.split(":")[1].strip()
+    elif line.startswith("Nombre Persona:"):
+        nombre_persona = line.split(":")[1].strip()
+    elif line.startswith("RFC Empresa:"):
+        rfc_empresa = line.split(":")[1].strip()
+    elif line.startswith("Nombre Empresa:"):
+        nombre_empresa = line.split(":")[1].strip()
+
+# Mostramos la información para verificar que se haya almacenado correctamente
+print("RFC Persona:", rfc_persona)
+print("Nombre Persona:", nombre_persona)
+print("RFC Empresa:", rfc_empresa)
+print("Nombre Empresa:", nombre_empresa)
